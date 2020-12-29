@@ -32,4 +32,8 @@
 *.app
 
 # VS Community files
-
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+Debug/
