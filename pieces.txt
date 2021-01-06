@@ -1,0 +1,6 @@
+1 - Bauer
+2 - Turm
+3 - Springer
+4 - Läufer
+5 - König
+6 - Dame
