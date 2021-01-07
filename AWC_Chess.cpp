@@ -3,7 +3,7 @@
 
 #include <iostream>
 //#include "chess_main_game.cpp"
-#include "AWC_ChessGame.h"
+#include "source/AWC_ChessGame.hpp"
 
 int main()
 {

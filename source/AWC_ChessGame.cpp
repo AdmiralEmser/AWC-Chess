@@ -1,9 +1,9 @@
 #include "AWC_ChessGame.h"
 #include <iostream>
 // including necessary files:
-#include "ConsoleOutput.h"
-#include "MainMoves.h"
-#include "SpecialMoves.h"
+#include "ConsoleOutput.hpp"
+#include "MainMoves.hpp"
+#include "SpecialMoves.hpp"
 
 void AWC_ChessGame::MainGame() {
 	ConsoleOutput co;
