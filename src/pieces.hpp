@@ -7,9 +7,9 @@
 #define WhiteKnight 5
 #define WhitePawn 6
 
-#define BlackKing 1
-#define BlackQueen 2
-#define BlackTower 3
-#define BlackBishop 4
-#define BlackKnight 5
-#define BlackPawn 6
+#define BlackKing 7
+#define BlackQueen 8
+#define BlackTower 9
+#define BlackBishop 10
+#define BlackKnight 11
+#define BlackPawn 12

@@ -55,3 +55,9 @@ void AWC_ChessGame::loadStandardGame() {
 		}
 	}
 }
+
+void AWC_ChessGame::graphicsOutput() {
+
+	// TO DO
+
+}

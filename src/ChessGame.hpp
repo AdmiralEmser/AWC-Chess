@@ -16,4 +16,5 @@ public:
 	// funcs for checking allowed moves
 	bool isActualPos();
 	bool destinatedPosIsAllowed();
+	void graphicsOutput();
 };
