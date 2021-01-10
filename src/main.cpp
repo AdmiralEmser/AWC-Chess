@@ -6,7 +6,6 @@ int main(){
     AWC_ChessGame cg;
     const char *user_input = "none";
     
-
     // loading standard game
     cg.loadStandardGame();
 
