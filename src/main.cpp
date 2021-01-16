@@ -5,6 +5,7 @@ int main(){
     // defining variables
     AWC_ChessGame cg;
     char *user_input = "none";
+
     
     // loading standard game
     cg.loadStandardGame();
@@ -20,6 +21,9 @@ int main(){
             default:
                 // TO DO: OUTPUT MESSAGE: error
         }*/
+
+        cg.resetPossibleMoves();
+        // ADD CHECKS FOR MOVES USING IF
 	}
     return 0;
 }

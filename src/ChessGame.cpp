@@ -61,3 +61,369 @@ void AWC_ChessGame::graphicsOutput() {
 	// TO DO
 
 }
+
+void AWC_ChessGame::resetPossibleMoves(){
+	for (short int i = 0; i < 8; i++)
+	{
+		for (short int j = 0; j < 8; j++)
+		{
+			possibleMoves[i][j] = false;
+		}
+	}
+}
+
+bool AWC_ChessGame::checkRequestedMoveInField(){
+	if (posXtarget >= 0 && posXtarget <= 7 && posYtarget >= 0 && posYtarget <= 7) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool AWC_ChessGame::checkRequestedMoveNotSamePosition(){
+	if (posX == posXtarget && posY == posYtarget){
+		return false;
+	} else {
+		return true;
+	}
+}
+
+bool AWC_ChessGame::checkRequestedMoveAllowedStandard(){
+	// no piece
+	if (field[posX][posY] == 0) return false;
+	
+	// Kings
+	if (field[posX][posY] == 1 || field[posX][posY] == 7){
+		for (short int i = (posX - 1) ; i <= (posX + 1); i++)
+		{
+			for (short int j = (posY - 1); j <= (posY + 1); j++)
+			{
+				if (checkPieceOnFieldPosIsEnemy(&i, &j)) {
+					possibleMoves[i][j] = true;
+				}
+				if (checkPieceOnFieldPosIsEnemy(&i, &j)) {
+					possibleMoves[i][j] = true;
+				}
+			}
+		}
+	}
+
+	// Queens
+	if (field[posX][posY] == 2 || field[posX][posY] == 8){
+		// horizontal & vertical
+		for (short int i = posX; i < 8; i++)
+		{
+			if (field[i][posY] == 0){
+				possibleMoves[i][posY] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&i, &posY))
+				{
+					possibleMoves[i][posY] = true;
+				}
+				break;
+			}
+		}
+		for (short int i = posX; i >= 0; i--)
+		{
+			if (field[i][posY] == 0){
+				possibleMoves[i][posY] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&i, &posY))
+				{
+					possibleMoves[i][posY] = true;
+				}
+				break;
+			}
+		}
+		for (short int i = posY; i < 8; i++)
+		{
+			if (field[posX][i] == 0){
+				possibleMoves[posX][i] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&posX, &i))
+				{
+					possibleMoves[posX][i] = true;
+				}
+				break;
+			}
+		}
+		for (short int i = posY; i >= 0; i--)
+		{
+			if (field[posX][i] == 0){
+				possibleMoves[posX][i] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&posX, &i))
+				{
+					possibleMoves[posX][i] = true;
+				}
+				break;
+			}
+		}
+
+		// diagonal
+		for (short int i = posX; i < 8; i++)
+		{
+			for (short int j = posY; i < 8; i++){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+		for (short int i = posX; i < 8; i++)
+		{
+			for (short int j = posY; i >= 0; i--){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+		for (short int i = posX; i >= 0; i++)
+		{
+			for (short int j = posY; i < 8; i++){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+		for (short int i = posX; i >= 0; i++)
+		{
+			for (short int j = posY; i >= 0; i++){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+	}
+
+	// Towers
+	if (field[posX][posY] == 3 || field[posX][posY] == 9){
+		// horizontal & vertical
+		for (short int i = posX; i < 8; i++)
+		{
+			if (field[i][posY] == 0){
+				possibleMoves[i][posY] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&i, &posY))
+				{
+					possibleMoves[i][posY] = true;
+				}
+				break;
+			}
+		}
+		for (short int i = posX; i >= 0; i--)
+		{
+			if (field[i][posY] == 0){
+				possibleMoves[i][posY] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&i, &posY))
+				{
+					possibleMoves[i][posY] = true;
+				}
+				break;
+			}
+		}
+		for (short int i = posY; i < 8; i++)
+		{
+			if (field[posX][i] == 0){
+				possibleMoves[posX][i] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&posX, &i))
+				{
+					possibleMoves[posX][i] = true;
+				}
+				break;
+			}
+		}
+		for (short int i = posY; i >= 0; i--)
+		{
+			if (field[posX][i] == 0){
+				possibleMoves[posX][i] = true;
+			} else {
+				if (checkPieceOnFieldPosIsEnemy(&posX, &i))
+				{
+					possibleMoves[posX][i] = true;
+				}
+				break;
+			}
+		}
+	}
+
+	//Bishops
+	if (field[posX][posY] == 4 || field[posX][posY] == 10)
+	{
+		for (short int i = posX; i < 8; i++)
+		{
+			for (short int j = posY; i < 8; i++){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+		for (short int i = posX; i < 8; i++)
+		{
+			for (short int j = posY; i >= 0; i--){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+		for (short int i = posX; i >= 0; i++)
+		{
+			for (short int j = posY; i < 8; i++){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+		for (short int i = posX; i >= 0; i++)
+		{
+			for (short int j = posY; i >= 0; i++){
+				if (field[i][j] == 0){
+					possibleMoves[i][j] = true;
+				} else {
+					if (checkPieceOnFieldPosIsEnemy(&i, &j))
+					{
+						possibleMoves[i][j] = true;
+					}
+					break;
+				}
+			}
+			break;
+		}
+	}
+
+	// Knights
+	if (field[posX][posY] == 5 || field[posX][posY] == 11)
+	{
+		if (posXtarget == posX + 2 && posYtarget == posY - 1){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+		if (posXtarget == posX + 1 && posYtarget == posY - 2){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+		if (posXtarget == posX - 2 && posYtarget == posY - 1){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+		if (posXtarget == posX - 1 && posYtarget == posY - 2){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+		if (posXtarget == posX + 2 && posYtarget == posY + 1){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+		if (posXtarget == posX + 1 && posYtarget == posY + 2){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+		if (posXtarget == posX - 2 && posYtarget == posY + 1){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+		if (posXtarget == posX - 1 && posYtarget == posY + 2){
+			if (checkPieceOnFieldPosIsEnemy(&posXtarget, &posYtarget)){
+				possibleMoves[posXtarget][posYtarget] = true;
+			}
+		}
+	}
+
+	// Pawns
+	if (field[posX][posY] == 6) // WHITE PAWNS
+	{
+
+	}
+	if (field[posX][posY] == 12) // BLACK PAWNS
+	{
+
+	}
+
+	// check if requested position is allowed
+	if (possibleMoves[posXtarget][posYtarget]){
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool AWC_ChessGame::checkPieceOnFieldPosIsEnemy(short int* i, short int* j){	
+	if (checkPieceOfPlayerX(&posX, &posY) != checkPieceOfPlayerX(&posXtarget, &posYtarget)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+short int AWC_ChessGame::checkPieceOfPlayerX(short int* i, short int* j){
+	if (field[*i][*j] == 0){
+		return 0;
+	} if (field[*i][*j] > 0 && field[*i][*j] < 7)
+	{
+		return 1;
+	} else if (field[*i][*j] > 6 && field[*i][*j] < 13)
+	{
+		return 2;
+	}
+}
+
+bool AWC_ChessGame::checkRequestedMoveAllowedSpecial(){
+
+}
